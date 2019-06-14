@@ -1,0 +1,75 @@
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+Demo1
+====================================================================================================================
+一、环境配置
+1. 添加 mybatis-3.4.6.jar，mysql-connector-java.5.1.40.jar 两个 jar 包
+2. 在项目目录下创建 config 文件夹
+3. 在 config 文件夹下新建 mybatis-config.xml 配置文件，修改数据库连接配置
+4. 在本 Demo1 项目中没有 org/mybatis/example/BlogMapper.xml 这个映射文件，为了避免运行错误，将这行注释掉，并添加自己的映射文件。
+--------------------------------------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://vsuzatedev03:3306/datahouse"/>
+				<property name="username" value="datasystem"/>
+				<property name="password" value="amd@123"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<!--<mapper resource="org/mybatis/example/BlogMapper.xml"/>-->
+		<mapper resource="EmployeeMapper.xml"/>
+	</mappers>
+</configuration>
+--------------------------------------------------------------------------------------------------------------------
+====================================================================================================================
+二、数据库配置
+1. 在数据库里面新建一个 employee table
+2. 添加字段 id, last_name, gender, email
+====================================================================================================================
+三、创建映射文件 EmployeeMapper.xml
+1. namespace 是定义该映射文件的名称空间
+2. id 是该名称空间下的唯一标识
+3. resultType 是查询结果返回的 bean 类型
+4. SqlSession 是通过 namespace + id 来定位要执行的 sql 语句
+5. #{id} 表示从传递过来的参数中取出 id 值
+6. 将 SQL 映射文件 EmployeeMapper.xml 添加到全局配置文件 mybatis-config.xml
+--------------------------------------------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jv.tdni.mybatis.EmployeeMapper">
+	<select id="selectEmployee" resultType="jv.tdni.mybatis.beans.Employee">
+		select id, last_name lastName, gender, email from employee where id = #{id}
+	</select>
+</mapper>
+--------------------------------------------------------------------------------------------------------------------
+====================================================================================================================
+四、创建 MybatisTest 测试文件
+1. 准备 SQL 映射文件并注册到全局配置文件中
+2. 根据全局配置文件 mybatis-config.xml 创建一个 SqlSessionFactory 对象
+3. 通过 SqlSessionFactory 开启一个 SqlSession，这个 SqlSession 用于进行数据库会话，用完则关闭
+4. SqlSession 通过 SQL 映射文件中定义的 namespace + id 来定位要执行的 SQL 语句
+5. SqlSession 执行 SQL 查询语句返回一个 Java Bean 对象
+====================================================================================================================
+五、创建 MybatisTest 测试，通过 Employee 接口来实现数据查询
+1. 为什么要通过接口实现查询：
+   sqlSession.selectOne 里面要求的参数是 Object 类型，但是 sql 具体参数类型可能是字符串，可能是数值等类型，
+   按照原先的方法是没有类型比较的，会造成 sql 语句类型匹配错误，而用接口的方式可以强制规定参数类型。
+2. 创建 jv.tdni.mybatis.dao.IEmployeeMapper 接口类，并定义接口方法 getEmployeeById(Integer id)
+3. 新建一个映射文件 IEmployeeMapper.xml，修改 namespace="jv.tdni.mybatis.dao.IEmployeeMapper"，id="getEmployeeById"
+   Mybatis 会自动绑定接口方法和 SQL 语句。
+4. 在测试文件中新建一个测试方法，
+   通过 sqlSession.getMapper 获取 IEmployeeMapper 接口的代理对象，再通过代理对象执行接口方法查询数据。
+5. 接口的好处是 1). 类型检查  2). 分离DAO规范和实现，可以应用于不同的框架 (解耦)
+====================================================================================================================
+六、总结
+1. 两个重要的配置文件
+2. SqlSession 代表一次会话，用完要关闭
+3. SqlSession 非线程安全，每次使用前要先创建，避免被其他线程关闭了
+====================================================================================================================
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
