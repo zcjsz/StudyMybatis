@@ -2,7 +2,6 @@ package jv.tdni.mybatis.test;
 
 import jv.tdni.mybatis.beans.Employee;
 import jv.tdni.mybatis.dao.IEmployeeMapper;
-import jv.tdni.mybatis.dao.IEmployeeMapperAnnotation;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -50,50 +49,54 @@ public class MybatisTest {
         if(sqlSession != null) sqlSession.close();
     }
 
-
-    private void test1() {
-        try {
-            Employee employee = sqlSession.selectOne("jv.tdni.mybatis.EmployeeMapper.selectEmployee", 1);
-            System.out.println(employee);
-        } catch(Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
     /***
      * 1. 通过 sqlSession.getMapper 获取 IEmployeeMapper 接口的代理对象
-     * 2. 通过代理对象执行接口方法查询数据
+     * 2. 通过代理对象执行接口方法操作数据
+     * 3. 默认获取到的 SqlSession 不会自动提交，需要手动提交
      */
-    private void test2() {
+    private void testAdd() {
+        Employee employee = new Employee();
+        employee.setLastName("Foo");
+        employee.setGender("F");
+        employee.setEmail("foo@123.com");
         try {
             IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
-            Employee employee = employeeMapper.getEmployeeById(1);
-            System.out.println(employee);
+            employeeMapper.addEmployee(employee);
+            sqlSession.commit();
         } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
 
-
-    private void test3() {
+    private void testGet() {
         try {
-            IEmployeeMapperAnnotation employeeMapper = sqlSession.getMapper(IEmployeeMapperAnnotation.class);
-            Employee employee = employeeMapper.getEmployeeById(1);
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            Employee employee = employeeMapper.getEmployeeById(2);
             System.out.println(employee);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
     }
+
+
+
+//    private void testAdd() {
+//        try {
+//            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+//            Employee employee = employeeMapper.addEmployee(1);
+//            System.out.println(employee);
+//        } catch(Exception ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
 
 
     public static void main(String[] args) throws IOException {
         MybatisTest mybatisTest = new MybatisTest();
         mybatisTest.getSqlSession();
-        mybatisTest.test1();
-        mybatisTest.test2();
-        mybatisTest.test3();
+        mybatisTest.testGet();
+        mybatisTest.testAdd();
         mybatisTest.closeSqlSession();
     }
 

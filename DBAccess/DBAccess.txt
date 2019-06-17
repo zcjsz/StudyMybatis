@@ -1,0 +1,38 @@
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+DB Access
+====================================================================================================================
+--------------------------------------------------------------------------------------------------------------------
+1. 在 jv.tdni.mybatis.dao.IEmployeeMapper 接口中定义 CRUD 四个方法:
+    public void addEmployee(Employee employee);
+    public void deleteEmployeeById(Integer id);
+    public void updateEmployee(Employee employee);
+    public Employee getEmployeeById(Integer id);
+--------------------------------------------------------------------------------------------------------------------
+2. 在 config/IEmployeeMapper.xml 中定义 CRUD SQL 映射语句
+  2.1 <insert> 标签， parameterType 可以省略
+      <insert id="addEmployee" parameterType="jv.tdni.mybatis.beans.Employee">
+          insert into employee(last_name, gender, email) values(#{lastName}, #{gender}, #{email})
+      </insert>
+  2.2 <delete> 标签
+      <delete id="deleteEmployeeById">
+          delete from employee where id=#{id}
+      </delete>
+  2.3 <update> 标签
+      <update id="updateEmployee">
+          update employee set last_name=#{lastName}, gender=#{gender}, email=#{email} where id=#{id}
+      </update>
+  2.4 <select> 标签
+      <select id="getEmployeeById" resultType="jv.tdni.mybatis.beans.Employee">
+          select id, last_name lastName, gender, email from employee where id = #{id}
+      </select>
+--------------------------------------------------------------------------------------------------------------------
+3. 编写测试类 jv.tdni.mybatis.test.MybatisTest
+  3.1 根据全局配置文件 mybatis-config.xml 创建一个 SqlSessionFactory 对象
+  3.2 通过 SqlSessionFactory 开启一个 SqlSession，这个 SqlSession 用于进行数据库会话，用完则关闭
+  3.3 SqlSession 通过 SQL 映射文件中定义的 namespace + id 来定位要执行的 SQL 语句
+  3.4 通过 sqlSession.getMapper 获取 IEmployeeMapper 接口的代理对象
+  3.5 通过代理对象执行接口方法操作数据
+  3.6 ***** 默认获取到的 SqlSession 不会自动提交，需要手动提交 *****
+--------------------------------------------------------------------------------------------------------------------
+====================================================================================================================
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
