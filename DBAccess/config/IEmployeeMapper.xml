@@ -3,8 +3,15 @@
 <mapper namespace="jv.tdni.mybatis.dao.IEmployeeMapper">
     <!-- public void addEmployee(Employee employee); -->
     <!-- parameterType 可以省略 -->
-    <insert id="addEmployee" parameterType="jv.tdni.mybatis.beans.Employee">
+    <insert id="addEmployee" parameterType="jv.tdni.mybatis.beans.Employee" useGeneratedKeys="true" keyProperty="id">
         insert into employee(last_name, gender, email) values(#{lastName}, #{gender}, #{email})
+    </insert>
+
+    <insert id="addEmployee" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE"> <!-- order="BEFORE" 表示当前 SQL 在插入 SQL 之前执行 -->
+            select EMPLOYEE_SEQ.nextval from dual
+        </selectKey>
+        insert into employee(id, last_name, gender, email) values(#{id}, #{lastName}, #{gender}, #{email})
     </insert>
 
     <!-- public void deleteEmployeeById(Integer id); -->
@@ -13,7 +20,7 @@
     </delete>
 
     <!-- public void updateEmployee(Employee employee); -->
-    <update id="updateEmployee">
+    <update id="updateEmployee" useGeneratedKeys="true" keyProperty="id">
         update employee set last_name=#{lastName}, gender=#{gender}, email=#{email} where id=#{id}
     </update>
 
@@ -21,4 +28,15 @@
     <select id="getEmployeeById" resultType="jv.tdni.mybatis.beans.Employee">
         select id, last_name lastName, gender, email from employee where id = #{id}
     </select>
+
+    <!--  public Employee getEmployeeByIdAndName(@Param("id") Integer id, @Param("lastName") String lastName); -->
+    <select id="getEmployeeByIdAndName" resultType="jv.tdni.mybatis.beans.Employee">
+        select id, last_name, gender, email from employee where id = #{id} and last_name = #{lastName}
+    </select>
+
+    <!-- public Employee getEmployeeByMapData(HashMap<String, String> map); -->
+    <select id="getEmployeeByMapData" resultType="jv.tdni.mybatis.beans.Employee">
+        select id, last_name, gender, email from employee where id = #{id} and last_name = #{lastName}
+    </select>
+
 </mapper>

@@ -7,20 +7,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fe0df11-5113-4551-9498-085cba1d33e5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/beans/Employee.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/dao/IEmployeeMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Demo1/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Demo1/src/jv/tdni/mybatis/dao/IEmployeeMapperAnnotation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Demo3/Demo3.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/DBAccess.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/DBAccess.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/config/IEmployeeMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/config/IEmployeeMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/config/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/config/mybatis-config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/out/production/DBAccess/jv/tdni/mybatis/beans/Employee.class" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/out/production/DBAccess/jv/tdni/mybatis/beans/Employee.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/out/production/DBAccess/jv/tdni/mybatis/dao/IEmployeeMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/out/production/DBAccess/jv/tdni/mybatis/dao/IEmployeeMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/out/production/DBAccess/jv/tdni/mybatis/test/MybatisTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/out/production/DBAccess/jv/tdni/mybatis/test/MybatisTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/beans/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/beans/Employee.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/dao/IEmployeeMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/dao/IEmployeeMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/test/MybatisTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../DBAccess/src/jv/tdni/mybatis/test/MybatisTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Demo1/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Demo1/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Demo1/Demo1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Demo1/Demo1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Demo1/config/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Demo1/config/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Demo1/out/production/Demo1/jv/tdni/mybatis/test/MybatisTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Demo1/out/production/Demo1/jv/tdni/mybatis/test/MybatisTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Demo1/out/production/Demo1/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Demo1/out/production/Demo1/mybatis-config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Demo1/src/jv/tdni/mybatis/test/MybatisTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Demo1/src/jv/tdni/mybatis/test/MybatisTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Notes.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Notes.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,17 +34,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Demo2.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
+            <state relative-caret-position="184">
+              <caret line="8" column="17" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="17" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config/mybatis-config.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
+            <state relative-caret-position="299">
+              <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -61,7 +58,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/jv/tdni/mybatis/dao/IEmployeeMapper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="92">
@@ -142,8 +139,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -178,6 +173,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -242,7 +239,7 @@
     <frame x="51" y="25" width="1869" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23916622" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24190894" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -319,20 +316,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Demo2.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="15" column="47" selection-start-line="15" selection-start-column="47" selection-end-line="15" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/mybatis-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="19" column="22" selection-start-line="19" selection-start-column="22" selection-end-line="19" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/database.properties">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="69">
@@ -368,6 +351,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="92">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Demo2.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="184">
+          <caret line="8" column="17" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/mybatis-config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
         </state>
       </provider>
     </entry>

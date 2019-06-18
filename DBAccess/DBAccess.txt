@@ -1,5 +1,6 @@
 ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
 DB Access
+一、Mybatis 增删改查
 ====================================================================================================================
 --------------------------------------------------------------------------------------------------------------------
 1. 在 jv.tdni.mybatis.dao.IEmployeeMapper 接口中定义 CRUD 四个方法:
@@ -32,7 +33,103 @@ DB Access
   3.3 SqlSession 通过 SQL 映射文件中定义的 namespace + id 来定位要执行的 SQL 语句
   3.4 通过 sqlSession.getMapper 获取 IEmployeeMapper 接口的代理对象
   3.5 通过代理对象执行接口方法操作数据
-  3.6 ***** 默认获取到的 SqlSession 不会自动提交，需要手动提交 *****
+  3.5 Mybatis 允许 增删改 有以下类型的返回值: Integer, Long, Boolean. 只需要在接口方法上定义返回类型就可以。
+  3.6 默认获取到的 SqlSession 不会自动提交，需要手动提交 commit()
+  3.7 自动提交和手动提交
+    3.7.1 sqlSessionFactory.openSession() 需要手动提交
+    3.7.2 sqlSessionFactory.openSession(true) 自动提交
 --------------------------------------------------------------------------------------------------------------------
+4. Mybatis 获取 MySQL 自增主键的值
+  4.1 Mybatis insert, update 操作都可以获取自增主键的值，需要在 <insert>, <update> 标签里面使用属性 useGeneratedKeys="true", keyProperty="id"
+  4.2 "keyProperty" 规定了获取的主键值封装到 javaBean 的哪个属性上，上面的例子是封装到到 employee 的 id 属性上面
+--------------------------------------------------------------------------------------------------------------------
+5. Oracle 不支持主键自增，使用序列来模拟自增。每次插入数据的主键都是从序列中拿到这个值。
+  5.1 在插入数据之前取 id, 使用最多的是 BEFORE 方式，因为 AFTER 方式在插入多行数据后，currval 返回的最后一行的 id 值
+    <insert id="addEmployee" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE"> <!-- order="BEFORE" 表示当前 SQL 在插入 SQL 之前执行 -->
+            select EMPLOYEE_SEQ.nextval from dual
+        </selectKey>
+        insert into employee(id, last_name, gender, email) values(#{id}, #{lastName}, #{gender}, #{email})
+    </insert>
+  5.2 在插入数据之后取 id
+    <insert id="addEmployee" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER"> <!-- order="AFTER" 表示当前 SQL 在插入 SQL 之后执行 -->
+            select EMPLOYEE_SEQ.currval from dual
+        </selectKey>
+        insert into employee(id, last_name, gender, email) values(employee_seq.nextval, #{lastName}, #{gender}, #{email})
+    </insert>
+--------------------------------------------------------------------------------------------------------------------
+====================================================================================================================
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+
+
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+DB Access
+二、Mybatis 获取自增 ID
+====================================================================================================================
+--------------------------------------------------------------------------------------------------------------------
+1. Mybatis 获取 MySQL 自增主键的值
+  1.1 Mybatis insert, update 操作都可以获取自增主键的值，需要在 <insert>, <update> 标签里面使用属性 useGeneratedKeys="true", keyProperty="id"
+  1.2 "keyProperty" 规定了获取的主键值封装到 javaBean 的哪个属性上，上面的例子是封装到到 employee 的 id 属性上面
+--------------------------------------------------------------------------------------------------------------------
+2. Oracle 不支持主键自增，使用序列来模拟自增。每次插入数据的主键都是从序列中拿到这个值。
+  2.1 在插入数据之前取 id, 使用最多的是 BEFORE 方式，因为 AFTER 方式在插入多行数据后，currval 返回的最后一行的 id 值
+    <insert id="addEmployee" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="BEFORE"> <!-- order="BEFORE" 表示当前 SQL 在插入 SQL 之前执行 -->
+            select EMPLOYEE_SEQ.nextval from dual
+        </selectKey>
+        insert into employee(id, last_name, gender, email) values(#{id}, #{lastName}, #{gender}, #{email})
+    </insert>
+  2.2 在插入数据之后取 id
+    <insert id="addEmployee" databaseId="oracle">
+        <selectKey keyProperty="id" resultType="Integer" order="AFTER"> <!-- order="AFTER" 表示当前 SQL 在插入 SQL 之后执行 -->
+            select EMPLOYEE_SEQ.currval from dual
+        </selectKey>
+        insert into employee(id, last_name, gender, email) values(employee_seq.nextval, #{lastName}, #{gender}, #{email})
+    </insert>
+--------------------------------------------------------------------------------------------------------------------
+====================================================================================================================
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+
+
+～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+DB Access
+二、Mybatis 多参数处理
+====================================================================================================================
+--------------------------------------------------------------------------------------------------------------------
+1. 多参数默认处理方式，多个参数会被封装成一个 Map :
+  1.1 Map key 是字符串 "param1", "param2" ... "paramN"，Map val 是传入的参数值
+  1.2 SQL 从 Map 中取值: #{param1}
+  1.3 但这种方式传参不明确，容易出错，所以不推荐
+--------------------------------------------------------------------------------------------------------------------
+2. 以命名参数方式传参，明确指定参数的名称，@Param注解方式来实现
+  2.1 在接口方法中以 @Param 注解来定义参数名称:
+      public Employee getEmployeeByIdAndName(@Param("id") Integer id, @Param("lastName") String lastName);
+  2.2 在 SQL 语句中以参数名称来取值:
+      <select id="getEmployeeByIdAndName" resultType="jv.tdni.mybatis.beans.Employee">
+          select id, last_name, gender, email from employee where id = #{id} and last_name = #{lastName}
+      </select>
+--------------------------------------------------------------------------------------------------------------------
+3. 以 POJO 方式传参数: 多个参数正好是业务逻辑的数据模型(JavaBean)，为了方便可以直接传入 POJO (简单 Java 对象)
+   例如: 接口方法 public int updateEmployee(Employee employee);  SQL 取值 #{属性名}
+--------------------------------------------------------------------------------------------------------------------
+4. 以 Map 方式传参数: 如果多个参数不是业务逻辑的数据模型，则可以将数据封装成 map 类型后进行传参 (因为传入的参数最后都被封装为 Map 数据类型)
+  4.1 例如: 接口方法 public Employee getEmployeeByMapData(HashMap<String, String> map);
+            SQL语句 select id, last_name, gender, email from employee where id = #{id} and last_name = #{lastName}
+            其中 id, lastName 都是 map key
+  4.2 Map 方式适用于偶尔传参，如果每次传参都要新建 map 对象也是比较麻烦
+--------------------------------------------------------------------------------------------------------------------
+5. 如果多个参数不是业务逻辑的数据模型，但又要经常使用，推荐编写一个 TO (transfer object) 数据传输对象
+  5.1 传输对象就是一个简单的 POJO，只有 Getter/Setter 方法
+--------------------------------------------------------------------------------------------------------------------
+6. 参数处理的扩展
+  6.1 public Employee getEmployeeByIdAndName(@Param("id") Integer id, String lastName);
+      取值: id = #{id} / #{param1},  last_name = #{param2}
+  6.2 public Employee getEmployeeByIdAndName(Integer id, @Param("emp") Employee employee);
+      取值: id = #{param1},  last_name = #{param2.lastName} / #{emp.lastName}
+  6.3 特别注意，如果传入的参数集合类型(Collection: List, Set)或者是数组类型，经处理后也是把List或是数组封装在Map中
+    6.3.1 Map key 设定:  集合 key = "collection", List key = "list", 数组 key = "array"
+    6.3.2 举例: public Employee getEmployeeById(Array<Integer> ids);
+          取值: 取出第一个 id 值 #{array[0]}
 ====================================================================================================================
 ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～

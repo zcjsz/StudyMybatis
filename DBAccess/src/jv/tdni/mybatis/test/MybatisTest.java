@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 /***
  * 1. 准备 SQL 映射文件并注册到全局配置文件中
@@ -32,7 +33,7 @@ public class MybatisTest {
             String resource = "mybatis-config.xml";
             inputStream = Resources.getResourceAsStream(resource);
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            sqlSession = sqlSessionFactory.openSession();
+            sqlSession = sqlSessionFactory.openSession(true);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -49,20 +50,41 @@ public class MybatisTest {
         if(sqlSession != null) sqlSession.close();
     }
 
+
     /***
      * 1. 通过 sqlSession.getMapper 获取 IEmployeeMapper 接口的代理对象
      * 2. 通过代理对象执行接口方法操作数据
      * 3. 默认获取到的 SqlSession 不会自动提交，需要手动提交
+     * 4. Mybatis 允许 增删改 有以下类型的返回值: Integer, Long, Boolean. 只需要在接口方法上定义返回类型就可以。
      */
     private void testAdd() {
-        Employee employee = new Employee();
-        employee.setLastName("Foo");
-        employee.setGender("F");
-        employee.setEmail("foo@123.com");
+        Employee employee = new Employee(null, "Tom", "M", "Tom@123.com");
         try {
             IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
             employeeMapper.addEmployee(employee);
-            sqlSession.commit();
+            // sqlSession.commit();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void testDelete() {
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            employeeMapper.deleteEmployeeById(2);
+            // sqlSession.commit();
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void testUpdate() {
+        Employee employee = new Employee(1, "Foo", "F", "foo@123.com");
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            int res = employeeMapper.updateEmployee(employee);
+            // sqlSession.commit();
+            System.out.println(res);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -78,25 +100,38 @@ public class MybatisTest {
         }
     }
 
+    private void testGetByIdAndName() {
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            Employee employee = employeeMapper.getEmployeeByIdAndName(1,"Foo");
+            System.out.println(employee);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
-
-//    private void testAdd() {
-//        try {
-//            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
-//            Employee employee = employeeMapper.addEmployee(1);
-//            System.out.println(employee);
-//        } catch(Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
-
-
+    private void testGetByMapData() {
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            HashMap<String, String> employeeMap = new HashMap<>();
+            employeeMap.put("id", "1");
+            employeeMap.put("lastName", "Foo");
+            Employee employee = employeeMapper.getEmployeeByMapData(employeeMap);
+            System.out.println(employee);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) throws IOException {
         MybatisTest mybatisTest = new MybatisTest();
         mybatisTest.getSqlSession();
-        mybatisTest.testGet();
-        mybatisTest.testAdd();
+        // mybatisTest.testGet();
+        // mybatisTest.testGetByIdAndName();
+        mybatisTest.testGetByMapData();
+        // mybatisTest.testAdd();
+        // mybatisTest.testDelete();
+        // mybatisTest.testUpdate();
         mybatisTest.closeSqlSession();
     }
 
