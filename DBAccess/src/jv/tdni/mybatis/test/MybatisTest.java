@@ -10,6 +10,8 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /***
  * 1. 准备 SQL 映射文件并注册到全局配置文件中
@@ -123,15 +125,50 @@ public class MybatisTest {
         }
     }
 
+    private void testGetByLikeNameRetList() {
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            List<Employee> employees = employeeMapper.getEmployeeByLikeNameRetList("Tom");
+            System.out.println(employees);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void testGetPropMapById() {
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            Map<String, Object> employeePropMap = employeeMapper.getEmployeePropMapById(1);
+            System.out.println(employeePropMap);
+            System.out.println(employeePropMap.getOrDefault("lastName", null));
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void testGetByLikeNameRetMap() {
+        try {
+            IEmployeeMapper employeeMapper = sqlSession.getMapper(IEmployeeMapper.class);
+            Map<Integer, Employee> employees = employeeMapper.getEmployeeByLikeNameRetMap("Tom");
+            System.out.println(employees);
+            System.out.println(employees.getOrDefault(6, null));
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         MybatisTest mybatisTest = new MybatisTest();
         mybatisTest.getSqlSession();
         // mybatisTest.testGet();
         // mybatisTest.testGetByIdAndName();
-        mybatisTest.testGetByMapData();
+        // mybatisTest.testGetByMapData();
         // mybatisTest.testAdd();
         // mybatisTest.testDelete();
         // mybatisTest.testUpdate();
+        // mybatisTest.testGetByLikeNameRetList();
+        // mybatisTest.testGetPropMapById();
+        mybatisTest.testGetByLikeNameRetMap();
         mybatisTest.closeSqlSession();
     }
 

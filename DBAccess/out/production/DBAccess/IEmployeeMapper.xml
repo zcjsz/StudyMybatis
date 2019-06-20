@@ -39,4 +39,21 @@
         select id, last_name, gender, email from employee where id = #{id} and last_name = #{lastName}
     </select>
 
+    <!-- public List<Employee> getEmployeeByLikeNameRetList(String lastName); -->
+    <!-- resultType 要写 List 列表里面的类型 -->
+    <select id="getEmployeeByLikeNameRetList" resultType="jv.tdni.mybatis.beans.Employee">
+        select id, last_name, gender, email from employee where last_name like #{lastName}
+    </select>
+
+    <!-- public Map<String, Object> getEmployeePropMapById(Integer id); -->
+    <!-- resultType 可以直接用 "map" 是因为 Mybatis 已经设定好一些 JDBC Type 到 Java Type 映射关系 -->
+    <select id="getEmployeePropMapById" resultType="map">
+        select id, last_name lastName, gender, email from employee where id = #{id}
+    </select>
+
+    <!-- public Map<Integer, Employee> getEmployeeByLikeNameRetMap(String lastName); -->
+    <select id="getEmployeeByLikeNameRetMap" resultType="jv.tdni.mybatis.beans.Employee">
+        select id, last_name, gender, email from employee where last_name like #{lastName}
+    </select>
+
 </mapper>
