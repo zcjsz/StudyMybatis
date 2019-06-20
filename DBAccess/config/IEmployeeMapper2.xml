@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jv.tdni.mybatis.dao.IEmployeeMapper2">
+
+    <!-- resultMap 自定义结果集映射规则， type: 自定义规则的 JavaBean 类型， id: 引用标识，是唯一的 -->
+    <resultMap id="Employee" type="jv.tdni.mybatis.beans.Employee">
+        <!-- 指定数据表列名与JavaBean属性的映射关系，column对应列名，property对应属性名 -->
+        <!-- 用 id 标签定义主键时底层会有优化，当然可以用 result 标签来定义，只是没有优化 -->
+        <id column="id" property="id" />
+        <!-- 定义普通列封装规则 -->
+        <result column="last_name" property="lastName" />
+        <!-- 其他不指定列会自动封装，但推荐把全部列的映射规则都定义 -->
+        <result column="gender" property="gender" />
+        <result column="email"  property="email"  />
+    </resultMap>
+
+    <!-- public Employee getEmployeeById2(Integer id); -->
+    <select id="getEmployeeById2" resultMap="Employee">
+        select id, last_name, gender, email from employee where id = #{id}
+    </select>
+
+</mapper>

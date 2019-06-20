@@ -9,7 +9,7 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://vsuzatedev03:3306/datahouse?&amp;useSSL=false"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/datahouse?&amp;useSSL=false"/>
                 <property name="username" value="datasystem"/>
                 <property name="password" value="amd@123"/>
             </dataSource>
@@ -17,5 +17,6 @@
     </environments>
     <mappers>
         <mapper resource="IEmployeeMapper.xml"/>
+        <mapper resource="IEmployeeMapper2.xml"/>
     </mappers>
 </configuration>
