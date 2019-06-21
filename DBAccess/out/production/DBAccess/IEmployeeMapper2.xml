@@ -54,7 +54,5 @@
         where emp.id = #{id}
     </select>
 
-    <!-- public Employee getEmployeeByIdStep(Integer id); -->
-
 
 </mapper>

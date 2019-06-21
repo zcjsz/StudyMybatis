@@ -210,5 +210,38 @@ DB Access
         select id, last_name, gender, email from employee where id = #{id}
     </select>
 --------------------------------------------------------------------------------------------------------------------
+2. 关联查询使用级联属性封装结果
+  2.1 department 是一个 JavaBean，同时也是 employee 下面的一个属性。
+      这里使用了 department.id , department.name 来封装返回的数据，同时 employee.department 属性也被设置了。
+        <resultMap id="Employee2" type="jv.tdni.mybatis.beans.Employee">
+            <id column="id" property="id" />
+            <result column="last_name" property="lastName" />
+            <result column="gender"    property="gender" />
+            <result column="email"     property="email" />
+            <result column="dept_id"   property="department.id" />
+            <result column="dept_name" property="department.name" />
+        </resultMap>
+        <select id="getEmpAndDeptById" resultMap="Employee2">
+            select emp.id as id, last_name, gender, email, dept_id, dept_name from employee as emp
+            left join department as dept on emp.dept_id = dept.id
+            where emp.id = #{id}
+        </select>
+      打印后的输出结果: Employee{id=7, lastName='Tom', gender='F', email='TomF@123.com', dept='Department{id=2, deptName='testing'}'}
+--------------------------------------------------------------------------------------------------------------------
+3. 使用 association 定义关联对象封装规则
+   <resultMap id="Employee3" type="jv.tdni.mybatis.beans.Employee">
+       <id column="id" property="id" />
+       <result column="last_name" property="lastName" />
+       <result column="gender"    property="gender" />
+       <result column="email"     property="email" />
+       <!-- association property 是 employee 的属性， javaType 是该属性对应的 JavaBean 类型 -->
+       <!-- association.property.id, association.property.name 是 department 的属性 -->
+       <association property="department" javaType="jv.tdni.mybatis.beans.Department">
+           <id column="dept_id" property="id" />
+           <result column="dept_name" property="name" />
+       </association>
+   </resultMap>
+--------------------------------------------------------------------------------------------------------------------
 ====================================================================================================================
 ～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～
+P32

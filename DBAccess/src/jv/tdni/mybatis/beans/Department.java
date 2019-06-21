@@ -2,7 +2,14 @@ package jv.tdni.mybatis.beans;
 
 public class Department {
     private Integer id;
-    private String deptName;
+    private String name;
+
+    public Department() {}
+
+    public Department(Integer id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;
@@ -12,19 +19,19 @@ public class Department {
         this.id = id;
     }
 
-    public String getDeptName() {
-        return deptName;
+    public String getName() {
+        return name;
     }
 
-    public void setDeptName(String deptName) {
-        this.deptName = deptName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Department{" +
                 "id=" + id +
-                ", deptName='" + deptName + '\'' +
+                ", deptName='" + name + '\'' +
                 '}';
     }
 }

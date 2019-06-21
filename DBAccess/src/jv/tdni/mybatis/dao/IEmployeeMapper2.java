@@ -10,6 +10,10 @@ import java.util.Map;
 
 public interface IEmployeeMapper2 {
 
-    public Employee getEmployeeById2(Integer id);
+    public Employee getEmployeeById(Integer id);
+
+    public Employee getEmployeeByIdStep(Integer id);
+
+    public Employee getEmpAndDeptById(Integer id);
 
 }

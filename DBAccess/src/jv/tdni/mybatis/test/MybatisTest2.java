@@ -1,6 +1,8 @@
 package jv.tdni.mybatis.test;
 
+import jv.tdni.mybatis.beans.Department;
 import jv.tdni.mybatis.beans.Employee;
+import jv.tdni.mybatis.dao.IDepartmentMapper;
 import jv.tdni.mybatis.dao.IEmployeeMapper2;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -9,9 +11,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /***
  * 1. 准备 SQL 映射文件并注册到全局配置文件中
@@ -60,11 +59,31 @@ public class MybatisTest2 {
      * 4. Mybatis 允许 增删改 有以下类型的返回值: Integer, Long, Boolean. 只需要在接口方法上定义返回类型就可以。
      */
 
-    private void testGetEmployeeById2() {
+    private void testGetEmployeeById() {
         try {
             IEmployeeMapper2 employeeMapper = sqlSession.getMapper(IEmployeeMapper2.class);
-            Employee employee = employeeMapper.getEmployeeById2(2);
+            Employee employee = employeeMapper.getEmployeeById(6);
             System.out.println(employee);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void testGetEmpAndDeptById() {
+        try {
+            IEmployeeMapper2 employeeMapper = sqlSession.getMapper(IEmployeeMapper2.class);
+            Employee employee = employeeMapper.getEmpAndDeptById(7);
+            System.out.println(employee);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void testGetDeptById() {
+        try {
+            IDepartmentMapper deptMapper = sqlSession.getMapper(IDepartmentMapper.class);
+            Department department = deptMapper.getDeptById(1);
+            System.out.println(department);
         } catch(Exception ex) {
             ex.printStackTrace();
         }
@@ -73,7 +92,9 @@ public class MybatisTest2 {
     public static void main(String[] args) throws IOException {
         MybatisTest2 mybatisTest2 = new MybatisTest2();
         mybatisTest2.getSqlSession();
-        mybatisTest2.testGetEmployeeById2();
+        // mybatisTest2.testGetEmployeeById();
+        // mybatisTest2.testGetEmpAndDeptById();
+        mybatisTest2.testGetDeptById();
         mybatisTest2.closeSqlSession();
     }
 

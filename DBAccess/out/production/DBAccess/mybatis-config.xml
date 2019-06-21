@@ -17,5 +17,7 @@
     </environments>
     <mappers>
         <mapper resource="IEmployeeMapper.xml"/>
+        <mapper resource="IEmployeeMapper2.xml"/>
+        <mapper resource="IDepartmentMapper.xml"/>
     </mappers>
 </configuration>
